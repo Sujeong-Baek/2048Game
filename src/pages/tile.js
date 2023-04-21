@@ -2,7 +2,19 @@ export default function Tile({ number }) {
   return (
     <div className="tile">
       { number }
-    </div>
+        <style jsx>{`
+        .tile {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 2rem;
+          width: 100px;
+          height: 100px;
+          background-color: white;
+          border: 1px solid #000000;
+        }
+      `}</style>
+    </div>    
   );
 }
 
