@@ -1,14 +1,24 @@
+const num2colors = new Map([
+  [0, [187, 173, 160]],
+  [2, [248, 231, 28]],
+  [4, [242, 202, 24]],
+  [8, [245, 159, 27]],
+  [16, [246, 122, 29]],
+  [32, [242, 83, 34]],
+  [64, [210, 30, 40]],
+  [128, [241, 45, 98]],
+  [256, [234, 33, 126]],
+  [512, [191, 33, 128]],
+  [1024, [149, 33, 135]],
+  [2048, [98, 33, 138]],
+]);
+
 export default function Tile({ number }) {
+  const [r, g, b] = num2colors.get(number);
+  const style = { backgroundColor: `rgb(${r}, ${g}, ${b})` };
   return (
-    <div className="tile">
+    <div className="tile" style={style}>
       { number }
     </div>    
   );
 }
-
-// css: grid
-// react tutorial
-// 과제: 다음주까지 0을 4x4 보드판으로 정렬해오기
-// https://www.youtube.com/watch?v=6UbkwRnfgUM
-// 보드 배경색깔만 입혀서 pr - issue 2
-// 새 브랜치 파서 tile 정렬해서 또다른 pr - issue3

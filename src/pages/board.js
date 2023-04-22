@@ -6,8 +6,8 @@ export default function Board({tiles}) {
     tiles = updateTileNumber(tiles);
     return (
         <div className="board">
-            {tiles.map((tile) => (
-                <Tile number={tile} />
+            {tiles.map((tile,index) => (
+                <Tile number={tile} key={index}  />
             ))}
         </div>
     );
