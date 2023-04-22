@@ -2,29 +2,31 @@ import Tile from './tile.js'
 import React, { useState, useEffect } from 'react';
 
 export default function Board() {
-    const [boardTiles, setBoardTiles] = useState(null);
+    const [boardTiles, setBoardTiles] = useState([
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+    ]);
 
     useEffect(() => {
-        setBoardTiles([
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-        ]);
+        let tiles = boardTiles;
+        tiles = updateTileNumber(tiles);
+        tiles = updateTileNumber(tiles);
+        setBoardTiles(tiles);
     }, []);
 
-    function updateTileNumber() {
-        console.log("here");
+    function updateTileNumber(tiles) {
         const number = Math.random() < 0.5 ? 2 : 4;
         let r = 0;
         let c = 0;
         do {
             r = Math.floor(Math.random()*4);
             c = Math.floor(Math.random()*4);
-        } while (boardTiles[4*r + c] !== 0);
-        const newBoardTiles = [...boardTiles];
+        } while (tiles[4*r + c] !== 0);
+        const newBoardTiles = [...tiles];
         newBoardTiles[4*r + c] = number;
-        setBoardTiles([...newBoardTiles]);
+        return newBoardTiles;
     }
 
     function push_left() {
@@ -71,9 +73,7 @@ export default function Board() {
             push_down();
         }
     }
-    if (!boardTiles) {
-        return null;
-    }
+
     return (
         <div className="board">
             {boardTiles.map((tile,index) => (
