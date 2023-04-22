@@ -2,7 +2,7 @@ export default function Tile({ number }) {
   return (
     <div className="tile">
       { number }
-    </div>
+    </div>    
   );
 }
 

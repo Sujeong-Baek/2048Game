@@ -1,0 +1,10 @@
+.tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2px;
+    font-size: 2rem;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+  }
