@@ -6,12 +6,6 @@ import Board from './board.js'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const tiles = [
-  0,0,0,0,
-  0,0,0,0,
-  0,0,0,0,
-  0,0,0,0
-];
 
 export default function Home() {
   return (
@@ -23,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Board tiles={tiles}/>
+        <Board />
       </main>
     </>
   )
