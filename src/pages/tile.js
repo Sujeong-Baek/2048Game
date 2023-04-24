@@ -18,7 +18,7 @@ export default function Tile({ number }) {
   const style = { backgroundColor: `rgb(${r}, ${g}, ${b})` };
   return (
     <div className="tile" style={style}>
-      { number }
+      { number === 0 ? "" : number }
     </div>    
   );
 }
