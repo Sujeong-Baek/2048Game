@@ -18,6 +18,10 @@ export default function Board() {
     setBoardTiles(tiles);
   }, []);
 
+  useEffect(() => {
+    checkGameOver();
+  }, [boardTiles]);
+
   function updateTileNumber(tiles) {
     const number = Math.random() < 0.8 ? 2 : 4;
     let r = 0;
