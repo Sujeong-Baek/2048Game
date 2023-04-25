@@ -14,7 +14,7 @@ const num2colors = new Map([
 ]);
 
 export default function Tile({ number }) {
-  const [r, g, b] = num2colors.get(number);
+  const [r, g, b] = num2colors.get(number) || [0, 0, 0];
   const style = { backgroundColor: `rgb(${r}, ${g}, ${b})` };
   return (
     <div className="tile" style={style}>
