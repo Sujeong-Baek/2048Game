@@ -9,6 +9,8 @@ export default function Board() {
     0, 0, 0, 0,
   ]);
 
+  const [score, setScore] = useState(0);
+
   useEffect(() => {
     let tiles = boardTiles;
     tiles = updateTileNumber(tiles);
@@ -17,7 +19,7 @@ export default function Board() {
   }, []);
 
   function updateTileNumber(tiles) {
-    const number = Math.random() < 0.5 ? 2 : 4;
+    const number = Math.random() < 0.7 ? 2 : 4;
     let r = 0;
     let c = 0;
     do {
@@ -29,8 +31,10 @@ export default function Board() {
     return newBoardTiles;
   }
 
+
   function push_left() {
     let isTileMoved = false;
+    let newScore = 0;
     for (let row=0; row<4; row++) {
       let compare_num = 0;
       let pos = 0;
@@ -45,23 +49,25 @@ export default function Board() {
           if (col !== pos) {
             isTileMoved = true;
           }
-          pos += 1;
+          pos ++;
         } else if (compare_num === boardTiles[4*row + col]){
           boardTiles[4*row + pos -1] = compare_num*2;
           boardTiles[4*row + col] = 0;
+          newScore += compare_num * 2;
           compare_num = 0;
           isTileMoved = true;
-          pos++;
         } 
       }
     }
       if (isTileMoved) {
         setBoardTiles(updateTileNumber([...boardTiles]));
+        setScore(score+newScore);
       }
   }
 
   function push_down() {
     let isTileMoved = false;
+    let newScore = 0;
     for (let col = 0; col < 4; col++) {
       let compare_num = 0;
       let pos = 3;
@@ -80,19 +86,21 @@ export default function Board() {
         } else if (compare_num === boardTiles[4 * row + col]) {
           boardTiles[4 * (pos + 1) + col] = compare_num * 2;
           boardTiles[4 * row + col] = 0;
+          newScore += compare_num * 2;
           compare_num = 0;
           isTileMoved = true;
-          pos--;
         }
       }
     }
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
+      setScore(score+newScore);
     }
 }
 
   function push_right() {
     let isTileMoved = false;
+    let newScore = 0;
     for (let row = 0; row < 4; row++) {
       let compare_num = 0;
       let pos = 3;
@@ -111,19 +119,21 @@ export default function Board() {
         } else if (compare_num === boardTiles[4 * row + col]) {
             boardTiles[4 * row + pos + 1] = compare_num * 2;
             boardTiles[4 * row + col] = 0;
+            newScore += compare_num * 2;
             compare_num = 0;
             isTileMoved = true;
-            pos--;
         }
       }
     }
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
+      setScore(score+newScore);
     }
   }
 
   function push_up() {
     let isTileMoved = false;
+    let newScore = 0;
     for (let col = 0; col < 4; col++) {
       let compare_num = 0;
       let pos = 0;
@@ -142,14 +152,15 @@ export default function Board() {
         } else if (compare_num === boardTiles[4 * row + col]) {
             boardTiles[4 * (pos - 1) + col] = compare_num * 2;
             boardTiles[4 * row + col] = 0;
+            newScore += compare_num * 2;
             compare_num = 0;
             isTileMoved = true;
-            pos++;
         }
       }
     }
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
+      setScore(score+newScore);
     }
   }
 
@@ -167,11 +178,15 @@ export default function Board() {
 
   return (
     <div  onKeyDown={handleKeyDown} tabIndex="0">
+      <div className="score-container">
+      <div className="score-label">SCORE</div>
+      <div className="score-value">{score}</div>
+      </div>
       <div className="board">
       {boardTiles.map((tile,index) => (
         <Tile number={tile} key={index} />
       ))}
-      </div>
+      </div>      
     </div>
     );
 }
