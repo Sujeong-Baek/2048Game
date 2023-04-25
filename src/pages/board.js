@@ -19,7 +19,7 @@ export default function Board() {
   }, []);
 
   function updateTileNumber(tiles) {
-    const number = Math.random() < 0.7 ? 2 : 4;
+    const number = Math.random() < 0.8 ? 2 : 4;
     let r = 0;
     let c = 0;
     do {
@@ -51,7 +51,7 @@ export default function Board() {
         }
       }
       alert("GAME OVER!");
-    } else if (boardTiles.includes()) {
+    } else if (boardTiles.includes(2048)) {
       alert("YOU WIN!");
     }
   }
