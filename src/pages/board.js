@@ -11,6 +11,8 @@ export default function Board() {
 
   const [score, setScore] = useState(0);
 
+  const [hasWon, setHasWon] = useState(false);
+
   useEffect(() => {
     let tiles = boardTiles;
     tiles = updateTileNumber(tiles);
@@ -31,18 +33,17 @@ export default function Board() {
         c = Math.floor(Math.random()*4);
     } while (tiles[4*r + c] !== 0);
     const newBoardTiles = [...tiles];
-    newBoardTiles[4*r + c] = number;
-    
+    newBoardTiles[4*r + c] = number;    
     return newBoardTiles;
   }
 
-  function checkGameOver() {
+  function checkFullTiles() {
     if (!boardTiles.includes(0)) { 
       for (let row = 0; row < 4; row++) {
         for (let col = 0; col < 3; col++) {
           const index = 4 * row + col;
           if (boardTiles[index] === boardTiles[index + 1]) {
-            return; 
+            return false;
           }
         }
       }  
@@ -50,13 +51,47 @@ export default function Board() {
         for (let col = 0; col < 4; col++) {
           const index = 4 * row + col;
           if (boardTiles[index] === boardTiles[index + 4]) {
-            return; 
+            return false;
           }
         }
       }
-      alert("GAME OVER!");
-    } else if (boardTiles.includes(2048)) {
-      alert("YOU WIN!");
+    return true;
+    }
+  } 
+
+  function checkGameOver() {
+    if (checkFullTiles()) {
+      const isNewGame = window.confirm("GAME OVER! Would you like to start a new game?");
+      if (isNewGame) {
+        startNewGame()
+      }
+    } else {
+      checkWinGame()
+    }
+  }
+
+  function checkWinGame() {
+    if (hasWon) {
+      return;
+    }
+    if (boardTiles.includes(2048)) {
+      setHasWon(true);
+      const isNewGame = window.confirm("YOU WIN! Would you like to start a new game?");
+      if (isNewGame) {
+        startNewGame();
+      }
+    }
+  }
+
+  function startNewGame() {
+    if (isNewGame) {
+      const tiles = [        
+      0, 0, 0, 0,        
+      0, 0, 0, 0,        
+      0, 0, 0, 0,        
+      0, 0, 0, 0,];
+      setBoardTiles(updateTileNumber(updateTileNumber(tiles)));
+      setScore(0);
     }
   }
 
@@ -209,11 +244,16 @@ export default function Board() {
   }
 
   return (
-    <div  onKeyDown={handleKeyDown} tabIndex="0">
+    <div onKeyDown={handleKeyDown} tabIndex="0">
+      <div className="board-container">
+      <div className="game">GAME</div>
+      <div className="game-name">2048</div>
+      {hasWon && <div className="win-message">YOU WIN!</div>}
       <div className="score-container">
       <div className="score-label">SCORE</div>
       <div className="score-value">{score}</div>
-      </div>
+      </div>      
+      </div> 
       <div className="board">
       {boardTiles.map((tile,index) => (
         <Tile number={tile} key={index} />
