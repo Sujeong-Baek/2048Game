@@ -28,9 +28,33 @@ export default function Board() {
     } while (tiles[4*r + c] !== 0);
     const newBoardTiles = [...tiles];
     newBoardTiles[4*r + c] = number;
+    
     return newBoardTiles;
   }
 
+  function checkGameOver() {
+    if (!boardTiles.includes(0)) { 
+      for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 3; col++) {
+          const index = 4 * row + col;
+          if (boardTiles[index] === boardTiles[index + 1]) {
+            return; 
+          }
+        }
+      }  
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 4; col++) {
+          const index = 4 * row + col;
+          if (boardTiles[index] === boardTiles[index + 4]) {
+            return; 
+          }
+        }
+      }
+      alert("GAME OVER!");
+    } else if (boardTiles.includes()) {
+      alert("YOU WIN!");
+    }
+  }
 
   function push_left() {
     let isTileMoved = false;
@@ -59,10 +83,11 @@ export default function Board() {
         } 
       }
     }
-      if (isTileMoved) {
-        setBoardTiles(updateTileNumber([...boardTiles]));
-        setScore(score+newScore);
-      }
+    if (isTileMoved) {
+      setBoardTiles(updateTileNumber([...boardTiles]));
+      setScore(score+newScore); 
+      checkGameOver();   
+    }
   }
 
   function push_down() {
@@ -94,9 +119,10 @@ export default function Board() {
     }
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
-      setScore(score+newScore);
-    }
-}
+      setScore(score+newScore);    
+      checkGameOver();  
+    }    
+  }
 
   function push_right() {
     let isTileMoved = false;
@@ -127,8 +153,9 @@ export default function Board() {
     }
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
-      setScore(score+newScore);
-    }
+      setScore(score+newScore); 
+      checkGameOver();  
+    }   
   }
 
   function push_up() {
@@ -160,7 +187,8 @@ export default function Board() {
     }
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
-      setScore(score+newScore);
+      setScore(score+newScore);     
+      checkGameOver(); 
     }
   }
 
