@@ -235,7 +235,7 @@ export default function Board() {
     if (hasWon) {
       return;
     }
-    if (boardTiles.includes(64)) {
+    if (boardTiles.includes(2048)) {
       setHasWon(true);
       const isNewGame = window.confirm("YOU WIN! Would you like to start a new game?");
       if (isNewGame) {
@@ -278,6 +278,36 @@ export default function Board() {
     }
   }
 
+  const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
+const [touchEnd, setTouchEnd] = useState({ x: 0, y: 0 });
+
+const handleTouchStart = (e) => {
+  setTouchStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+};
+
+const handleTouchMove = (e) => {
+  setTouchEnd({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+};
+
+const handleTouchEnd = () => {
+  const deltaX = touchEnd.x - touchStart.x;
+  const deltaY = touchEnd.y - touchStart.y;
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 0) {
+      push_right();
+    } else {
+      push_left();
+    }
+  } else {
+    if (deltaY > 0) {
+      push_down();
+    } else {
+      push_up();
+    }
+  }
+};
+
   return (
     <div >
       <div className="board-container">
@@ -292,7 +322,7 @@ export default function Board() {
           <div className='undo-count'>{Array(undoCount).fill("❤️").join("")}</div>
         </button>                
       </div> 
-      <div className="board">
+      <div className="board" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {boardTiles.map((tile,index) => (
         <Tile number={tile} key={index} />
       ))}
