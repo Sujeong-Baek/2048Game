@@ -1,5 +1,9 @@
 import Tile from './tile.js'
 import React, { useState, useEffect } from 'react';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFaceDizzy, faFaceGrinStars } from "@fortawesome/free-solid-svg-icons";
 
 export default function Board() {
   const [boardTiles, setBoardTiles] = useState([
@@ -218,14 +222,34 @@ export default function Board() {
     checkGameOver();
   }, [boardTiles]);
 
+  const gameOverIcon = (
+    <div>
+      <FontAwesomeIcon icon={faFaceDizzy} style={{ fontSize: "70px", color: "black" }} />
+    </div>
+  );
+  
+  const winGameIcon = (
+    <div>
+      <FontAwesomeIcon icon={faFaceGrinStars} style={{ fontSize: "70px", color: "gold" }} />
+    </div>
+  );
+
   function checkGameOver() {
     if (checkFullTiles()) {
-      const isNewGame = window.confirm("GAME OVER! Would you like to start a new game?");
-      if (isNewGame) {
-        startNewGame()
-      }
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: "GAME OVER!",
+        html: gameOverIcon,
+        showCancelButton: true,
+        confirmButtonText: "Start a new game!", 
+        cancelButtonText: "I'm done.TnT",
+      }).then((result) => {
+        if (result.value) {
+          startNewGame();
+        }
+      });
     } else {
-      checkWinGame()
+      checkWinGame();
     }
   }
 
@@ -235,15 +259,23 @@ export default function Board() {
     if (hasWon) {
       return;
     }
-    if (boardTiles.includes(2048)) {
+    if (boardTiles.includes(32)) {
       setHasWon(true);
-      const isNewGame = window.confirm("YOU WIN! Would you like to start a new game?");
-      if (isNewGame) {
-        startNewGame();
-      }
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title: "You Wwwwwin!!!",
+        html: winGameIcon,
+        showCancelButton: true,
+        confirmButtonText: "Continue playing!",
+        cancelButtonText: "Start a new game.",
+      }).then((result) => {
+        if (!result.value) {
+          startNewGame();
+        }
+      });
     }
   }
-
+  
   function startNewGame() {
       const tiles = [        
       0, 0, 0, 0,        
@@ -258,7 +290,6 @@ export default function Board() {
   }
 
   const [undoCount, setUndoCount] = useState(0)
-
   const [undoScore, setUndoScore] = useState(1000);
 
   useEffect(() => {
@@ -278,7 +309,7 @@ export default function Board() {
     }
   }
 
-  const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
+const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
 const [touchEnd, setTouchEnd] = useState({ x: 0, y: 0 });
 
 const handleTouchStart = (e) => {
