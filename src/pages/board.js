@@ -9,13 +9,7 @@ export default function Board() {
     0, 0, 0, 0,
   ]);
 
-  const [score, setScore] = useState(0);
-
-  const [hasWon, setHasWon] = useState(false);
-
-  useEffect(() => {
-    checkGameOver();
-  }, [boardTiles]);
+  const [score, setScore] = useState(0);  
 
   function updateTileNumber(tiles) {
     const number = Math.random() < 0.8 ? 2 : 4;
@@ -30,61 +24,39 @@ export default function Board() {
     return newBoardTiles;
   }
 
-  function checkFullTiles() {
-    if (!boardTiles.includes(0)) { 
-      for (let row = 0; row < 4; row++) {
-        for (let col = 0; col < 3; col++) {
-          const index = 4 * row + col;
-          if (boardTiles[index] === boardTiles[index + 1]) {
-            return false;
-          }
+  function push_right() {
+    let isTileMoved = false;
+    let newScore = 0;
+    for (let row = 0; row < 4; row++) {
+      let compare_num = 0;
+      let pos = 3;
+      for (let col = 3; col >= 0; col--) {
+        if (boardTiles[4 * row + col] === 0) {
+          continue;
         }
-      }  
-      for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 4; col++) {
-          const index = 4 * row + col;
-          if (boardTiles[index] === boardTiles[index + 4]) {
-            return false;
-          }
+        if (compare_num !== boardTiles[4 * row + col]) {
+            compare_num = boardTiles[4 * row + col];
+            boardTiles[4 * row + col] = 0;
+            boardTiles[4 * row + pos] = compare_num;
+            if (col !== pos) {
+              isTileMoved = true;
+            }
+            pos--;
+        } else if (compare_num === boardTiles[4 * row + col]) {
+            boardTiles[4 * row + pos + 1] = compare_num * 2;
+            boardTiles[4 * row + col] = 0;
+            newScore += compare_num * 2;
+            compare_num = 0;
+            isTileMoved = true;
         }
       }
-    return true;
     }
-  } 
-
-  function checkGameOver() {
-    if (checkFullTiles()) {
-      const isNewGame = window.confirm("GAME OVER! Would you like to start a new game?");
-      if (isNewGame) {
-        startNewGame()
-      }
-    } else {
-      checkWinGame()
-    }
-  }
-
-  function checkWinGame() {
-    if (hasWon) {
-      return;
-    }
-    if (boardTiles.includes(2048)) {
-      setHasWon(true);
-      const isNewGame = window.confirm("YOU WIN! Would you like to start a new game?");
-      if (isNewGame) {
-        startNewGame();
-      }
-    }
-  }
-
-  function startNewGame() {
-      const tiles = [        
-      0, 0, 0, 0,        
-      0, 0, 0, 0,        
-      0, 0, 0, 0,        
-      0, 0, 0, 0,];
-      setBoardTiles(updateTileNumber(updateTileNumber(tiles)));
-      setScore(0);
-      setHasWon(false);
+    if (isTileMoved) {
+      setBoardTiles(updateTileNumber([...boardTiles]));
+      setScore(score+newScore); 
+      setUndoScore(undoScore-newScore)
+      checkGameOver();  
+    }   
   }
 
   function push_left() {
@@ -117,6 +89,7 @@ export default function Board() {
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
       setScore(score+newScore); 
+      setUndoScore(undoScore-newScore)
       checkGameOver();   
     }
   }
@@ -151,42 +124,9 @@ export default function Board() {
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
       setScore(score+newScore);    
+      setUndoScore(undoScore-newScore)
       checkGameOver();  
     }    
-  }
-
-  function push_right() {
-    let isTileMoved = false;
-    let newScore = 0;
-    for (let row = 0; row < 4; row++) {
-      let compare_num = 0;
-      let pos = 3;
-      for (let col = 3; col >= 0; col--) {
-        if (boardTiles[4 * row + col] === 0) {
-          continue;
-        }
-        if (compare_num !== boardTiles[4 * row + col]) {
-            compare_num = boardTiles[4 * row + col];
-            boardTiles[4 * row + col] = 0;
-            boardTiles[4 * row + pos] = compare_num;
-            if (col !== pos) {
-              isTileMoved = true;
-            }
-            pos--;
-        } else if (compare_num === boardTiles[4 * row + col]) {
-            boardTiles[4 * row + pos + 1] = compare_num * 2;
-            boardTiles[4 * row + col] = 0;
-            newScore += compare_num * 2;
-            compare_num = 0;
-            isTileMoved = true;
-        }
-      }
-    }
-    if (isTileMoved) {
-      setBoardTiles(updateTileNumber([...boardTiles]));
-      setScore(score+newScore); 
-      checkGameOver();  
-    }   
   }
 
   function push_up() {
@@ -219,11 +159,28 @@ export default function Board() {
     if (isTileMoved) {
       setBoardTiles(updateTileNumber([...boardTiles]));
       setScore(score+newScore);     
+      setUndoScore(undoScore-newScore)
       checkGameOver(); 
     }
   }
 
+  function handleStart() {
+    if (boardTiles.every((tile) => tile === 0)) {
+      setBoardTiles(updateTileNumber(updateTileNumber(boardTiles)));
+    }
+  }
+
+  const [prevBoardTiles, setPrevBoardTiles] = useState([]);
+
   function handleKeyDown(event) {
+    setPrevBoardTiles((prevBoardTiles) => {
+      const newPrevBoardTiles = [...prevBoardTiles, [...boardTiles]];
+      if (newPrevBoardTiles.length > 5) {
+        newPrevBoardTiles.shift(); 
+      }
+      return newPrevBoardTiles;
+    })
+    
     if (event.key === "ArrowLeft") {
       push_left();
     } else if (event.key === "ArrowRight") {
@@ -235,22 +192,105 @@ export default function Board() {
     }
   }
 
-  function handleStart() {
-    if (boardTiles.every((tile) => tile === 0)) {
-      setBoardTiles(updateTileNumber(updateTileNumber(boardTiles)));
+  function checkFullTiles() {
+    if (!boardTiles.includes(0)) { 
+      for (let row = 0; row < 4; row++) {
+        for (let col = 0; col < 3; col++) {
+          const index = 4 * row + col;
+          if (boardTiles[index] === boardTiles[index + 1]) {
+            return false;
+          }
+        }
+      }  
+      for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 4; col++) {
+          const index = 4 * row + col;
+          if (boardTiles[index] === boardTiles[index + 4]) {
+            return false;
+          }
+        }
+      }
+    return true;
+    }
+  } 
+
+  useEffect(() => {
+    checkGameOver();
+  }, [boardTiles]);
+
+  function checkGameOver() {
+    if (checkFullTiles()) {
+      const isNewGame = window.confirm("GAME OVER! Would you like to start a new game?");
+      if (isNewGame) {
+        startNewGame()
+      }
+    } else {
+      checkWinGame()
+    }
+  }
+
+  const [hasWon, setHasWon] = useState(false);
+
+  function checkWinGame() {
+    if (hasWon) {
+      return;
+    }
+    if (boardTiles.includes(64)) {
+      setHasWon(true);
+      const isNewGame = window.confirm("YOU WIN! Would you like to start a new game?");
+      if (isNewGame) {
+        startNewGame();
+      }
+    }
+  }
+
+  function startNewGame() {
+      const tiles = [        
+      0, 0, 0, 0,        
+      0, 0, 0, 0,        
+      0, 0, 0, 0,        
+      0, 0, 0, 0,];
+      setBoardTiles(updateTileNumber(updateTileNumber(tiles)));
+      setScore(0);
+      setHasWon(false);
+      setUndoCount(0)
+      setUndoScore(1000)
+  }
+
+  const [undoCount, setUndoCount] = useState(0)
+
+  const [undoScore, setUndoScore] = useState(1000);
+
+  useEffect(() => {
+    if (undoCount<5 && undoScore<=0) {
+      setUndoCount(undoCount + 1);
+      setUndoScore(1000);
+    }
+  }, [score]);
+
+  function handleUndo() {
+    if (undoCount > 0 && prevBoardTiles.length > 0) {
+      const lastBoardState = prevBoardTiles[prevBoardTiles.length - 1];
+      setBoardTiles([...lastBoardState]);
+      setUndoCount(undoCount - 1);
+      setUndoScore(1000);
+      setPrevBoardTiles(prevBoardTiles.slice(0, -1));
     }
   }
 
   return (
     <div >
       <div className="board-container">
-      <div className="game">GAME</div>
-      <div className="game-name">2048</div>
-      {hasWon && <div className="win-message">YOU WIN!</div>}
-      <div className="score-container">
-      <div className="score-label">SCORE</div>
-      <div className="score-value">{score}</div>
-      </div>      
+        {hasWon && <div className="win-message">YOU WIN!</div>}
+        <div className="game-name">2048</div>
+        <div className="score-container">
+          <div className="score-label">SCORE</div>
+          <div className="score-value">{score}</div>
+        </div> 
+        <button className="undo-container" onClick={handleUndo} onKeyDown={handleKeyDown} tabIndex="0">
+          <div className='undo'>UNDO</div>
+          <div className='undo-count'>{Array(undoCount).fill("❤️").join("")}</div>
+        </button>                
       </div> 
       <div className="board">
       {boardTiles.map((tile,index) => (
@@ -258,9 +298,9 @@ export default function Board() {
       ))}
       </div> 
       <div className='button-container'>
-      <button className='start-button' onClick={handleStart} onKeyDown={handleKeyDown} tabIndex="0">START</button>  
-      <button className='restart-button' onClick={startNewGame} onKeyDown={handleKeyDown} tabIndex="0">RESTART</button> 
-      </div>     
+        <button className='start-button' onClick={handleStart} onKeyDown={handleKeyDown} tabIndex="0">START</button>  
+        <button className='restart-button' onClick={startNewGame} onKeyDown={handleKeyDown} tabIndex="0">NEW GAME</button>
+      </div>              
     </div>
     );
 }

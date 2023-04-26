@@ -11,6 +11,9 @@ import '@/styles/game.css'
 import '@/styles/start-button.css'
 import '@/styles/restart-button.css'
 import '@/styles/button-container.css'
+import '@/styles/undo-container.css'
+import '@/styles/undo.css'
+import '@/styles/undo-count.css'
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />
