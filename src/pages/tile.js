@@ -11,10 +11,11 @@ const num2colors = new Map([
   [512, [191, 33, 128]],
   [1024, [149, 33, 135]],
   [2048, [98, 33, 138]],
+  [4096,[74, 0, 128]]
 ]);
 
 export default function Tile({ number }) {
-  const [r, g, b] = num2colors.get(number) || [0, 0, 0];
+  const [r, g, b] = num2colors.get(number) || [38, 153, 50];
   const style = { backgroundColor: `rgb(${r}, ${g}, ${b})` };
   return (
     <div className="tile" style={style}>
