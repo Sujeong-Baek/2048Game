@@ -1,0 +1,10 @@
+.game {
+  grid-column: 1; 
+  grid-row: 1; 
+  justify-content: center; 
+  display: flex;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #776e65;
+  text-shadow: 1px 1px #bbada0;
+}

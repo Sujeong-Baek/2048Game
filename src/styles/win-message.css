@@ -1,0 +1,11 @@
+.win-message {
+  grid-column: 2; 
+  grid-row: 1; 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: darkorange;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ffd700, 0 0 35px #ffd700, 0 0 40px #ffd700, 0 0 50px #ffd700;
+}
