@@ -14,13 +14,6 @@ export default function Board() {
   const [hasWon, setHasWon] = useState(false);
 
   useEffect(() => {
-    let tiles = boardTiles;
-    tiles = updateTileNumber(tiles);
-    tiles = updateTileNumber(tiles);
-    setBoardTiles(tiles);
-  }, []);
-
-  useEffect(() => {
     checkGameOver();
   }, [boardTiles]);
 
@@ -84,7 +77,6 @@ export default function Board() {
   }
 
   function startNewGame() {
-    if (isNewGame) {
       const tiles = [        
       0, 0, 0, 0,        
       0, 0, 0, 0,        
@@ -92,7 +84,7 @@ export default function Board() {
       0, 0, 0, 0,];
       setBoardTiles(updateTileNumber(updateTileNumber(tiles)));
       setScore(0);
-    }
+      setHasWon(false);
   }
 
   function push_left() {
@@ -243,8 +235,14 @@ export default function Board() {
     }
   }
 
+  function handleStart() {
+    if (boardTiles.every((tile) => tile === 0)) {
+      setBoardTiles(updateTileNumber(updateTileNumber(boardTiles)));
+    }
+  }
+
   return (
-    <div onKeyDown={handleKeyDown} tabIndex="0">
+    <div >
       <div className="board-container">
       <div className="game">GAME</div>
       <div className="game-name">2048</div>
@@ -258,7 +256,11 @@ export default function Board() {
       {boardTiles.map((tile,index) => (
         <Tile number={tile} key={index} />
       ))}
-      </div>      
+      </div> 
+      <div className='button-container'>
+      <button className='start-button' onClick={handleStart} onKeyDown={handleKeyDown} tabIndex="0">START</button>  
+      <button className='restart-button' onClick={startNewGame} onKeyDown={handleKeyDown} tabIndex="0">RESTART</button> 
+      </div>     
     </div>
     );
 }
