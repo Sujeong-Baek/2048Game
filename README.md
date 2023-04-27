@@ -1,8 +1,5 @@
 # 2048 Game in React
-<video width="240" height="320" controls>
-    <source src="https://drive.google.com/file/d/1JJvqRiWBDYEH2z7GMBIyLU8MRJvi3tw_/view?usp=sharing" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+![Gameplay Demo](https://drive.google.com/file/d/1NX8OOExS4gBpEVqXLNc66Uqb2XtHAyoX/view?usp=sharing)
 This repository contains a simple implementation of the popular 2048 game developed using React.
 
 
