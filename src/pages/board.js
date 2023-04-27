@@ -293,17 +293,17 @@ export default function Board() {
       setScore(0);
       setHasWon(false);
       setUndoCount(0)
-      setUndoScore(1000)
+      setUndoScore(500)
       setPrevBoardTiles([])
   }
 
   const [undoCount, setUndoCount] = useState(0)
-  const [undoScore, setUndoScore] = useState(1000);
+  const [undoScore, setUndoScore] = useState(500);
 
   useEffect(() => {
     if (undoCount<5 && undoScore<=0) {
       setUndoCount(undoCount + 1);
-      setUndoScore(1000+undoScore);
+      setUndoScore(500+undoScore);
     }
   }, [score]);
 
@@ -312,7 +312,7 @@ export default function Board() {
       const lastBoardState = prevBoardTiles[prevBoardTiles.length - 1];
       setBoardTiles([...lastBoardState]);
       setUndoCount(undoCount - 1);
-      setUndoScore(1000);
+      setUndoScore(500);
       setPrevBoardTiles(prevBoardTiles.slice(0, -1));
     }
   }
