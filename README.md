@@ -4,8 +4,6 @@
 ![Gameplay Demo](C:\Users\zxcwl\Desktop\2048Game\game2048.gif)
 
 
-Your browser does not support the video tag.
-</video>
 This repository contains a simple implementation of the popular 2048 game developed using React.
 
 
