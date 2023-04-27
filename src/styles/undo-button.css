@@ -1,4 +1,4 @@
-.restart-button {
+.undo-button {
   justify-content: center; 
   display: flex;
   background-color: #4CAF50;
@@ -16,7 +16,15 @@
   transition: all 0.3s ease-in-out;
 }
 
-.restart-button:hover {
+
+.undo-button:hover {
   background-color: #53b156;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+.undo-button span {
+  color: white;
+  font-size: 20px;
+
+}
+

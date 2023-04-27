@@ -1,5 +1,6 @@
 .undo-count {
   font-size: 18px;
-  padding: 5px 10px;
+  padding: auto;
+  margin: auto;
   text-align: center;
 }
