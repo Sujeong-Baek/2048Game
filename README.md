@@ -22,14 +22,17 @@ To run this project locally, follow these steps:
 `
 
 2. Change to the project directory:
+
 `cd 2048-game
 `
 
 3. Install dependencies:
+
 `npm install
 `
 
 4. Start the development server:
+
 `npm start
 `
 
