@@ -4,4 +4,5 @@
     grid-template-rows: repeat(4, 1fr);
     background-color: beige;
     padding: 2px;
+    outline: none;
 }
