@@ -1,5 +1,5 @@
 .win-message {
-  grid-column: 1; 
+  grid-column: 2; 
   grid-row: 1; 
   display: flex;
   justify-content: center; 
@@ -7,5 +7,5 @@
   font-size: 2rem;
   font-weight: bold;
   color: #f9f6f2;
-  text-shadow: 0 0 5px #8f7a66, 0 0 10px #8f7a66, 0 0 15px #8f7a66, 0 0 20px #8f7a66, 0 0 35px #8f7a66, 0 0 40px #8f7a66, 0 0 50px #8f7a66; /* 텍스트 그림자 색상 변경 */
+  text-shadow: 0 0 5px #ff6b15, 0 0 10px #ff6b15, 0 0 15px #ff6b15, 0 0 20px #ff6b15, 0 0 35px #ff6b15, 0 0 40px #ff6b15, 0 0 50px #ff6b15; 
 }

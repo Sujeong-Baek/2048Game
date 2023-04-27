@@ -237,21 +237,23 @@ export default function Board() {
   function checkGameOver() {
     if (checkFullTiles()) {
       const MySwal = withReactContent(Swal);
-      MySwal.fire({
-        title: "GAME OVER!",
-        html: gameOverIcon,
-        showCancelButton: true,
-        confirmButtonText: "Start a new game!", 
-        cancelButtonText: "I'm done.TnT",
-      }).then((result) => {
-        if (result.value) {
-          startNewGame();
-        }
-      });
+      setTimeout(() => {
+        MySwal.fire({
+          title: "GAME OVER!",
+          html: gameOverIcon,
+          showCancelButton: true,
+          confirmButtonText: "Start a new game!", 
+          cancelButtonText: "I'm done.TnT",
+        }).then((result) => {
+          if (result.value) {
+            startNewGame();
+          }
+        });
+      }, 700);
     } else {
       checkWinGame();
     }
-  }
+  } 
 
   const [hasWon, setHasWon] = useState(false);
 
@@ -259,22 +261,24 @@ export default function Board() {
     if (hasWon) {
       return;
     }
-    if (boardTiles.includes(32)) {
+    if (boardTiles.includes(16)) {
       setHasWon(true);
+      setTimeout(() => {
       const MySwal = withReactContent(Swal);
       MySwal.fire({
         title: "You Wwwwwin!!!",
         html: winGameIcon,
         showCancelButton: true,
         confirmButtonText: "Continue playing!",
-        cancelButtonText: "Start a new game.",
+        cancelButtonText: "Start a new game!",
       }).then((result) => {
         if (!result.value) {
           startNewGame();
         }
       });
-    }
+    }, 700);
   }
+}
   
   function startNewGame() {
       const tiles = [        
@@ -340,28 +344,28 @@ const handleTouchEnd = () => {
 };
 
   return (
-    <div >
+    <div>
       <div className="board-container">
-        {hasWon && <div className="win-message">YOU WIN!</div>}
+        <div className="game">GAME</div>
         <div className="game-name">2048</div>
+        {hasWon && <div className="win-message">YOU WIN!</div>}
         <div className="score-container">
           <div className="score-label">SCORE</div>
           <div className="score-value">{score}</div>
-        </div> 
-        <button className="undo-container" onClick={handleUndo} onKeyDown={handleKeyDown} tabIndex="0">
-          <div className='undo'>UNDO</div>
-          <div className='undo-count'>{Array(undoCount).fill("❤️").join("")}</div>
-        </button>                
+        </div>                         
       </div> 
-      <div className="board" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
+      <div className="board" onKeyDown={handleKeyDown} tabIndex="0" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       {boardTiles.map((tile,index) => (
         <Tile number={tile} key={index} />
       ))}
       </div> 
       <div className='button-container'>
-        <button className='start-button' onClick={handleStart} onKeyDown={handleKeyDown} tabIndex="0">START</button>  
-        <button className='restart-button' onClick={startNewGame} onKeyDown={handleKeyDown} tabIndex="0">NEW GAME</button>
+        <button className="undo-button" onClick={handleUndo} onKeyDown={handleKeyDown} tabIndex="0">          
+          <span className='undo-count'>{Array(undoCount).fill("❤️").join("")}</span>
+          {undoCount === 0 && <span>Make a heart!!!</span>}
+        </button>
+        <button className='start-button' onClick={startNewGame} onKeyDown={handleKeyDown} tabIndex="0">NEW GAME</button>          
       </div>              
     </div>
     );
-}
+  }
