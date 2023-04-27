@@ -2,28 +2,36 @@
 
 This repository contains a simple implementation of the popular 2048 game developed using React.
 
+
 ## Getting Started
 
 To run this project locally, follow these steps:
+
 
 ### Prerequisites
 
 - Node.js (v12.x.x or higher)
 - NPM or Yarn package manager
 
+
 ### Installation
 
 1. Clone the repository:
-git clone https://github.com/your_username/2048-game.git
+
+`git clone https://github.com/Sujeong-Baek/2048Game.git
+`
 
 2. Change to the project directory:
-cd 2048-game
+`cd 2048-game
+`
 
 3. Install dependencies:
-npm install
+`npm install
+`
 
 4. Start the development server:
-npm start
+`npm start
+`
 
 The application should now be running on http://localhost:3000.
 
