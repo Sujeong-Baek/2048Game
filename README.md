@@ -1,7 +1,9 @@
 # 2048 Game in React
 
 This repository contains a simple implementation of the popular 2048 game developed using React.
-##Getting Started
+
+## Getting Started
+
 To run this project locally, follow these steps:
 
 ### Prerequisites
