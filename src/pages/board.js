@@ -261,7 +261,7 @@ export default function Board() {
     if (hasWon) {
       return;
     }
-    if (boardTiles.includes(16)) {
+    if (boardTiles.includes(2048)) {
       setHasWon(true);
       setTimeout(() => {
       const MySwal = withReactContent(Swal);
