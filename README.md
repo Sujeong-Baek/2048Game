@@ -1,5 +1,8 @@
 # 2048 Game in React
-
+<video width="240" height="320" controls>
+    <source src="C:\Users\zxcwl\Desktop\2048Game\game2048.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 This repository contains a simple implementation of the popular 2048 game developed using React.
 
 
@@ -21,22 +24,28 @@ To run this project locally, follow these steps:
 `git clone https://github.com/Sujeong-Baek/2048Game.git
 `
 
+
 2. Change to the project directory:
 
 `cd 2048-game
 `
+
 
 3. Install dependencies:
 
 `npm install
 `
 
+
 4. Start the development server:
 
 `npm start
 `
 
+
 The application should now be running on http://localhost:3000.
+
+
 
 ## Features
 
@@ -46,6 +55,8 @@ The application should now be running on http://localhost:3000.
 - Win/lose messages with restart options
 - Score tracking
 
+
+
 ## How to Play
 
 - Use the arrow keys or swipe gestures to move the tiles on the board.
@@ -53,11 +64,15 @@ The application should now be running on http://localhost:3000.
 - The game is won when a tile with the value 2048 is created.
 - The game is lost when there are no valid moves left and the board is full.
 
+
+
 ## Built With
 
 - React.js
 - SweetAlert2
 - Font Awesome
+
+
 
 ## License
 
