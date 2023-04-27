@@ -1,7 +1,7 @@
 # 2048 Game in React
 
 
-![Gameplay Demo](https://postfiles.pstatic.net/MjAyMzA0MjhfMjQ2/MDAxNjgyNjE5MzU4MDUx.jRMKF1Q4sKRVMXGOCOj5jmXE71X6k26GxS9xaUIS1QMg.3l0T38n0XTIIOTWJQhPsnxVDd8pr0W16Fw29sg5EUE8g.GIF.suzietnwjd/game2048.gif?type=w773)
+![Gameplay Demo](https://postfiles.pstatic.net/MjAyMzA0MjhfMjg4/MDAxNjgyNjIwMTE1NDYz.uDHBoFwRz8NEeJeym1iLqqMOCV2JR_Mh6DcM6qWpXdEg.cNEAhRj4kJ2muj6lFrjP9Rh5lvwLL5x1zBUFigEFTVsg.GIF.suzietnwjd/%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98game2048.gif?type=w773)
 
 
 This repository contains a simple implementation of the popular 2048 game developed using React.
