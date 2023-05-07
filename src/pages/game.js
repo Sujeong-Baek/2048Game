@@ -19,18 +19,21 @@ export default function Game() {
   const [undoScore, setUndoScore] = useState(500)
   const [hasWon, setHasWon] = useState(false);
   const [prevBoardTiles, setPrevBoardTiles] = useState([]);
- 
+  
   function handleKeyDown(event) {
     let isMoved = false;    
+    let newBoardTiles = [];
+    let newScore = 0;
     if (event.key === "ArrowLeft") {
-      isMoved, newBoardTiles, newScore = push_left(boardTiles);
+      [isMoved, newBoardTiles, newScore] = push_left([...boardTiles]);
     } else if (event.key === "ArrowRight") {
-      isMoved, newBoardTiles, newScore  = push_right(boardTiles);
+      [isMoved, newBoardTiles, newScore]  = push_right([...boardTiles]);
     } else if (event.key === "ArrowUp") {
-      isMoved, newBoardTiles, newScore  = push_up(boardTiles);  
+      [isMoved, newBoardTiles, newScore]  = push_up([...boardTiles]);  
     } else if (event.key === "ArrowDown") {
-      isMoved, newBoardTiles, newScore  = push_down(boardTiles);
+      [isMoved, newBoardTiles, newScore]  = push_down([...boardTiles]);
     }
+    console.log(isMoved);
     if (isMoved) {
         setBoardTiles(updateTileNumber(newBoardTiles));
         setScore(score + newScore);
@@ -88,12 +91,14 @@ export default function Game() {
     }
   }
 
+  const boardFocus = useRef(null);
+
   function focusingBoard() {
     boardFocus.current.focus();
   }
 
     return (
-      <>
+      <div>
         <div className="board-container">
           <div className="game">GAME</div>
           <div className="game-name">2048</div>
@@ -102,11 +107,13 @@ export default function Game() {
         </div>
         <Board focusingBoard={focusingBoard} 
               handleKeyDown={handleKeyDown}
+              boardTiles={boardTiles}
+              boardFocus={boardFocus}
               /> 
         <Button handleUndo={handleUndo}
                 focusingBoard={focusingBoard}
                 undoCount={undoCount}
                 startNewGame={startNewGame} />          
-      </>
+      </div>
     );
   }

@@ -1,4 +1,3 @@
-
 export function updateTileNumber(tiles) {
   const number = Math.random() < 0.8 ? 2 : 4;
   let r = 0;
@@ -13,6 +12,9 @@ export function updateTileNumber(tiles) {
 }
 
 export function canMoveTile(boardTiles) {
+  if (!boardTiles) {
+    return true;
+  }
   if (boardTiles.includes(0)) {
     return true;
   } 

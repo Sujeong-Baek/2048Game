@@ -3,12 +3,14 @@ import React, { useState, useRef } from 'react';
 import { push_down, push_right, push_left, push_up } from './updateBoard.js';
 
 export default function Board({
-  focusingBoard,
   handleKeyDown,
+  boardTiles,
+  focusingBoard,
+  boardFocus
 }) {
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
   const [touchEnd, setTouchEnd] = useState({ x: 0, y: 0 });
-  const boardFocus = useRef(null);
+  
 
   const handleTouchStart = (e) => {
     setTouchStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
@@ -39,7 +41,7 @@ export default function Board({
 
   return (
     <div className="board"
-          ref={boardFocus}
+          ref={boardFocus} 
           onBlur={focusingBoard}
           onKeyDown={handleKeyDown}
           tabIndex="0"
