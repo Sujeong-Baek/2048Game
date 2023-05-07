@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { gameOverIcon, winGameIcon } from './gameOverIcon.js';
-import { updateTileNumber, canMoveTile, push_down, push_right, push_left, push_up } from './updateBoard.js';
+import { updateTileNumber, canMoveTile, push_down, push_right, push_left, push_up } from './api/updateBoard.js';
 import showPopup from './popUp.js';
 import Score from './score.js';
 import Button from './button.js'
