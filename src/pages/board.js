@@ -1,13 +1,13 @@
 import Tile from './tile.js'
 import React, { useState, useRef } from 'react';
-import { push_down, push_right, push_left, push_up } from './updateBoard.js';
 
 export default function Board({
-  handleKeyDown,
   boardTiles,
   focusingBoard,
-  boardFocus
+  boardFocus,
+  push,
 }) {
+
   const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
   const [touchEnd, setTouchEnd] = useState({ x: 0, y: 0 });
   
@@ -26,19 +26,31 @@ export default function Board({
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
       if (deltaX > 0) {
-        push_right();
+        push("r");
       } else {
-        push_left();
+        push("l");
       }
     } else {
       if (deltaY > 0) {
-        push_down();
+        push("d");
       } else {
-        push_up();
+        push("u");
       }
     }
   }
 
+  function handleKeyDown(event) {
+    if (event.key === "ArrowLeft") {
+      push("l")
+    } else if (event.key === "ArrowRight") {
+      push("r")
+    } else if (event.key === "ArrowUp") {
+      push("u")
+    } else if (event.key === "ArrowDown") {
+      push("d")
+    }
+  }
+    
   return (
     <div className="board"
           ref={boardFocus} 

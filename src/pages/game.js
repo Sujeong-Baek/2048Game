@@ -20,31 +20,31 @@ export default function Game() {
   const [hasWon, setHasWon] = useState(false);
   const [prevBoardTiles, setPrevBoardTiles] = useState([]);
   
-  function handleKeyDown(event) {
+
+  function push(lrud) {
     let isMoved = false;    
     let newBoardTiles = [];
     let newScore = 0;
-    if (event.key === "ArrowLeft") {
+    if (lrud === "l") {
       [isMoved, newBoardTiles, newScore] = push_left([...boardTiles]);
-    } else if (event.key === "ArrowRight") {
+    } else if (lrud === "r") {
       [isMoved, newBoardTiles, newScore]  = push_right([...boardTiles]);
-    } else if (event.key === "ArrowUp") {
+    } else if (lrud === "u") {
       [isMoved, newBoardTiles, newScore]  = push_up([...boardTiles]);  
-    } else if (event.key === "ArrowDown") {
+    } else if (lrud === "d") {
       [isMoved, newBoardTiles, newScore]  = push_down([...boardTiles]);
     }
-    console.log(isMoved);
     if (isMoved) {
-        setBoardTiles(updateTileNumber(newBoardTiles));
-        setScore(score + newScore);
-        setUndoScore(undoScore - newScore);
-        checkGameOver();
-        const newPrevBoardTiles = [...prevBoardTiles, [...boardTiles]];
-        if (newPrevBoardTiles.length > 5) {
-          newPrevBoardTiles.shift(); 
-        }
-        setPrevBoardTiles(newPrevBoardTiles)       
-    };
+      setBoardTiles(updateTileNumber(newBoardTiles));
+      setScore(score + newScore);
+      setUndoScore(undoScore - newScore);
+      checkGameOver();
+      const newPrevBoardTiles = [...prevBoardTiles, [...boardTiles]];
+      if (newPrevBoardTiles.length > 5) {
+        newPrevBoardTiles.shift(); 
+      }
+      setPrevBoardTiles(newPrevBoardTiles)       
+  };
   }
 
   useEffect(() => {
@@ -106,9 +106,9 @@ export default function Game() {
           <Score score={score} />
         </div>
         <Board focusingBoard={focusingBoard} 
-              handleKeyDown={handleKeyDown}
               boardTiles={boardTiles}
               boardFocus={boardFocus}
+              push={push}
               /> 
         <Button handleUndo={handleUndo}
                 focusingBoard={focusingBoard}
