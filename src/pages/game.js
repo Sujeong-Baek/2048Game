@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { gameOverIcon, winGameIcon } from './gameOverIcon.js';
-import { updateTileNumber, canMoveTile, push_down, push_right, push_left, push_up } from './updateBoard.js';
-import showPopup from './popUp.js';
+import { updateTileNumber, canMoveTile, push_down, push_right, push_left, push_up } from './api/updateBoard.js';
 import Score from './score.js';
 import Button from './button.js'
 import Board from './board.js';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFaceDizzy, faFaceGrinStars } from "@fortawesome/free-solid-svg-icons"
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function Game() {
   const [boardTiles, setBoardTiles] = useState([
@@ -19,7 +21,31 @@ export default function Game() {
   const [undoScore, setUndoScore] = useState(500)
   const [hasWon, setHasWon] = useState(false);
   const [prevBoardTiles, setPrevBoardTiles] = useState([]);
-  
+  const boardFocus = useRef(null);  
+  const gameOverIcon = (
+    <div>
+      <FontAwesomeIcon icon={faFaceDizzy} style={{ fontSize: "70px", color: "black" }} />
+    </div>
+  );  
+  const winGameIcon = (
+    <div>
+      <FontAwesomeIcon icon={faFaceGrinStars} style={{ fontSize: "70px", color: "gold" }} />
+    </div>
+  );
+
+
+  useEffect(() => {
+    checkGameOver();
+  }, [boardTiles]);
+
+
+  useEffect(() => {
+    if (undoCount<5 && undoScore<=0) {
+      setUndoCount(undoCount + 1);
+      setUndoScore(500+undoScore);
+    }
+  }, [score]);
+
 
   function push(lrud) {
     let isMoved = false;    
@@ -47,18 +73,34 @@ export default function Game() {
   };
   }
 
-  useEffect(() => {
-    checkGameOver();
-  }, [boardTiles]);
 
   function checkGameOver() {
-    if (!canMoveTile()) {
-      showPopup("GAME OVER!", gameOverIcon, "Start a new game!", "I'm done.TnT");    
+    if (!canMoveTile(boardTiles)) {
+      showPopup("GAME OVER!", gameOverIcon, "I'm done.TnT", "Start a new game!");    
     } else if (!hasWon && boardTiles.includes(2048)) {
-        showPopup("YOU WIN!!!",winGameIcon, "Continue playing!","Start a new game!");
+        showPopup("YOU WIN!!!",winGameIcon, "Continue playing!", "Start a new game!", );
         setHasWon(true);
       }      
   }
+
+
+  function showPopup(title, icon, confirmButtonText, cancelButtonText) {
+    setTimeout(() => {
+      const MySwal = withReactContent(Swal);
+      MySwal.fire({
+        title,
+        html: icon,
+        showCancelButton: true,
+        confirmButtonText, 
+        cancelButtonText,
+      }).then((result) => {
+        if (!result.value) {
+          startNewGame();
+        }
+      });
+    }, 700);
+  }
+
 
   function startNewGame() {
       const tiles = [        
@@ -74,12 +116,6 @@ export default function Game() {
       setPrevBoardTiles([])
   }
 
-  useEffect(() => {
-    if (undoCount<5 && undoScore<=0) {
-      setUndoCount(undoCount + 1);
-      setUndoScore(500+undoScore);
-    }
-  }, [score]);
 
   function handleUndo() {
     if (undoCount > 0 && prevBoardTiles.length > 0) {
@@ -91,7 +127,6 @@ export default function Game() {
     }
   }
 
-  const boardFocus = useRef(null);
 
   function focusingBoard() {
     boardFocus.current.focus();

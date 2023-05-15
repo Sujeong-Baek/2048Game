@@ -60,7 +60,7 @@ export default function Board({
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}>
-          {boardTiles.map((tile,index) => (
+          {boardTiles?.map((tile,index) => (
           <Tile number={tile} key={index} />
         ))}
     </div> 
