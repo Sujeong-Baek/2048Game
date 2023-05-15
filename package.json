@@ -1,4 +1,5 @@
 {
+  "homepage": "https://sujeong-baek.github.io/2048game",
   "name": "game2048",
   "version": "0.1.0",
   "private": true,
@@ -6,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "predeploy": "next build",
+    "deploy": "gh-pages -d out --dotfiles"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -22,5 +26,9 @@
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.7.3",
     "sweetalert2-react-content": "^5.0.7"
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
+
 }
