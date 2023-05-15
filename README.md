@@ -1,5 +1,6 @@
 # 2048 Game in React
 
+![game2048](https://github.com/Sujeong-Baek/2048Game/assets/122095491/cd6edd01-c4db-4d47-946b-874c408410b4)
 
 ![Gameplay Demo](https://postfiles.pstatic.net/MjAyMzA0MjhfMjg4/MDAxNjgyNjIwMTE1NDYz.uDHBoFwRz8NEeJeym1iLqqMOCV2JR_Mh6DcM6qWpXdEg.cNEAhRj4kJ2muj6lFrjP9Rh5lvwLL5x1zBUFigEFTVsg.GIF.suzietnwjd/%ED%81%AC%EA%B8%B0%EB%B3%80%ED%99%98game2048.gif?type=w773)
 
